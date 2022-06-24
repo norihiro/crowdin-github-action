@@ -152,7 +152,8 @@ push_to_branch() {
     git checkout -b "${LOCALIZATION_BRANCH}"
   fi
 
-  git add .
+  crowdin list translations --no-colors --plain |
+  tr '\n' '\0' | xargs -r -0 git add
 
   if [ ! -n "$(git status -s)" ]; then
     echo "NOTHING TO COMMIT"
